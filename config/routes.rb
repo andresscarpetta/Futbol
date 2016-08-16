@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get '/' => "tournaments#index"
+
+  get '/' => "tournaments#main"
+
+  get '/tournaments/create' => "tournaments#index"
 
   post '/create_tournament', :controller => 'tournaments', :action => 'create'
   # The priority is based upon order of creation: first created -> highest priority.
