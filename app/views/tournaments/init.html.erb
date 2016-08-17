@@ -1,0 +1,19 @@
+<h1 class="text-center"><%= @tournament.name %></h1>
+<div class="container">
+  <h2 class="col-sm-6">Jugadores:</h2>
+  <div class="col-sm-6 clear-fix">
+    <a href="javascript:add_player();" class="btn btn-primary center-block pull-right">Agregar otro jugador</a>
+  </div>
+  <form class="col-xs-12" action="/tournaments/<%= @tournament.id %>/start" method="post">
+    <div id="content" class="row">
+      <% for i in 0..@tournament.minPlayers-1 do %>
+        <div class="col-xs-12">
+          <label>Jugador:</label>
+          <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required>
+          <br>
+        </div>
+      <% end %>
+    </div>
+    <input type="submit" class="btn btn-primary center-block" value="Empezar Torneo">
+  </form>
+</div>
