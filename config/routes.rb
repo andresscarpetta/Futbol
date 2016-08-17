@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  get '/' => "tournaments#main"
+  get '/tournaments/create' => "tournaments#index"
+  get '/tournaments' => "tournaments#show"
+  get '/tournaments/:id/init', :controller => 'tournaments', :action => 'init'
+  post '/create_tournament', :controller => 'tournaments', :action => 'create'
+  post '/tournaments/:id/start', :controller => 'tournaments', :action => 'start'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
