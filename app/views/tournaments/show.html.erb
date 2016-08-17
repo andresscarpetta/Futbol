@@ -1,0 +1,9 @@
+<h1 class="text-center">Torneos Activos</h1>
+<br>
+<div class="container">
+  <div class="list-group">
+    <% @tournaments.each do |tournament| %>
+      <%= link_to(tournament.name, '/tournaments/' + tournament.id.to_s + '/init', {class: 'list-group-item'}) %>
+    <%end %>
+  </div>
+</div>

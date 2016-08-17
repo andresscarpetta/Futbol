@@ -1,5 +1,13 @@
 class TournamentsController < ApplicationController
 
+  def show
+    @tournaments = Tournament.all
+  end
+
+  def init
+    @tournament = Tournament.find(params[:id])
+  end
+
   def create
     if(Tournament.find_by(name: params[:name]) == nil)
       t = Tournament.new

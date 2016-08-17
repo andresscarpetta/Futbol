@@ -14,3 +14,11 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+function add_player(){
+  $("#content").append('<div class="col-xs-12"> <label>Jugador:</label> <div class="row"> <div class="col-xs-10"> <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required> </div> <button onclick="remove_player(this);" class="btn btn-default col-xs-2">Remover</button  > </div> <br> </div>');
+}
+
+function remove_player(obj){
+  $(obj).parent().parent().remove();
+}
