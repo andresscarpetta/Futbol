@@ -48,7 +48,7 @@ class TournamentsController < ApplicationController
     @tournament.status = "Started"
     @tournament.save
     if( @matches.size < 1 )
-      redirect_to '/tournaments/' + params[:id] + '/play/final'
+      redirect_to tournament_final_match_path(params[:id])
     end
     @players_info = PlayerInfo.where(tournament_id: @tournament.id).order(currentPoints: :desc)
   end
@@ -98,10 +98,7 @@ class TournamentsController < ApplicationController
   def finish
     @tournament = Tournament.find(params[:id])
     @players_info = PlayerInfo.where(tournament_id: @tournament.id).order(currentPoints: :desc)
-    @winner = @players_info[0].player.username
-    PlayerInfo.where(tournament_id: @tournament.id).delete_all
-    Match.where(tournament_id: @tournament.id).delete_all
-    @tournament.players.delete_all
+    @winner = params[:winner_name]
     @tournament.status = "Finished"
     @tournament.save
   end
@@ -111,19 +108,33 @@ class TournamentsController < ApplicationController
     second_player = Player.find_by(username: params[:second_finalist_name])
     first_player_info = PlayerInfo.find_by(player_id: first_player.id)
     second_player_info = PlayerInfo.find_by(player_id: second_player.id)
+    if(params[:second_finalist_score] > params[:first_finalist_score])
+      redirect_to tournament_summary_path(params[:id], winner_name: second_player.username)
+    end
     if(params[:first_finalist_score] > params[:second_finalist_score])
-      redirect_to "/tournaments/" + params[:id] + "/finish"
-    elsif(params[:second_finalist_score] > params[:first_finalist_score])
-      redirect_to "/tournaments/" + params[:id] + "/finish"
-    elsif(params[:first_finalist_score] == params[:second_finalist_score])
-      redirect_to "/tournaments/" + params[:id] + "/finish"
+      redirect_to tournament_summary_path(params[:id], winner_name: first_player.username)
+    end
+    if(params[:first_finalist_score] == params[:second_finalist_score])
+      redirect_to tournament_final_match_path(params[:id])
     end
   end
 
   def final
     @tournament = Tournament.find(params[:id])
     @players_info = PlayerInfo.where(tournament_id: @tournament.id).order(currentPoints: :desc)
-    @winner = params[:winner_name]
+  end
+
+  def destroy
+    tournament = Tournament.find(params[:id])
+    tournament.players.each do |player|
+      if player.email == nil
+        player.delete
+      end
+    end
+    PlayerInfo.where(tournament_id: tournament.id).delete_all
+    Match.where(tournament_id: tournament.id).delete_all
+    tournament.save
+    redirect_to '/', notice: "Torneo Terminado"
   end
 
 end

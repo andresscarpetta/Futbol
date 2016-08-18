@@ -42,4 +42,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= form_tag(tournament_destroy_path(@tournament.id), method: "post") do %>
+    <%= submit_tag("Terminar Torneo", class: "btn btn-primary center-block") %>
+  <% end %>
 </div>
