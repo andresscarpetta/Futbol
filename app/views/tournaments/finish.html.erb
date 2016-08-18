@@ -1,0 +1,48 @@
+<h1 class="text-center">Ganador de <%= @tournament.name %></h1>
+<h2 class="text-center"><%= @winner %></h2>
+<h4 class="text-center">¡Felicitaciones!</h4>
+<div class="container">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">
+          #
+        </th>
+        <th class="text-center">
+          Jugador
+        </th>
+        <th class="text-center">
+          Equipo
+        </th>
+        <th class="text-center">
+          Puntos
+        </th>
+      </tr>
+    </thead>
+    <br>
+    <h3>Tabla de Puntuación</h3>
+    <tbody>
+      <% i = 1 %>
+      <% @players_info.each do |player_info| %>
+        <tr class="text-center">
+          <td>
+            <%= i %>
+            <% i+=1 %>
+          </td>
+          <td>
+            <%= Player.find(player_info.player_id).username %>
+          </td>
+          <td>
+            <%= player_info.team %>
+          </td>
+          <td>
+            <%= player_info.currentPoints %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= form_tag(tournament_destroy_path(@tournament.id), method: "post") do %>
+    <%= submit_tag("Terminar Torneo", class: "btn btn-primary center-block") %>
+  <% end %>
+</div>

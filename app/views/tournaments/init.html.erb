@@ -4,16 +4,63 @@
   <div class="col-sm-6 clear-fix">
     <a href="javascript:add_player();" class="btn btn-primary center-block pull-right">Agregar otro jugador</a>
   </div>
-  <form class="col-xs-12" action="/tournaments/<%= @tournament.id %>/start" method="post">
+  <form class="col-xs-12" action="javascript:init_tournament();" method="post">
     <div id="content" class="row">
       <% for i in 0..@tournament.minPlayers-1 do %>
-        <div class="col-xs-12">
-          <label>Jugador:</label>
-          <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required>
-          <br>
+        <div class="col-xs-12 element">
+          <div class="col-xs-8">
+            <label>Jugador:</label>
+            <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required>
+          </div>
+          <div class="col-xs-2">
+            <label>Equipo:</label>
+            <select class="form-control">
+            </select>
+          </div>
         </div>
       <% end %>
     </div>
-    <input type="submit" class="btn btn-primary center-block" value="Empezar Torneo">
+    <br>
+    <input type="submit" name="commit" class="btn btn-primary center-block" value="Empezar Torneo">
   </form>
 </div>
+<script>
+  (function(){
+    for (var i = 0; i < countries.length; i++) {
+      $("select").each(function(){
+        var flag = false;
+        $(this).children("option").each(function(){
+          if($(this).val() == countries[i]){
+            flag = true;
+          }
+        });
+        if(!flag){
+          $(this).append("<option value='"+countries[i]+"'>"+countries[i]+"</option>");
+        }
+      });
+    }
+  })();
+
+  function init_tournament(){
+    var players = [];
+    $(".element").each(function(){
+      var info = [];
+      info.push($(this).find("input[type='text']").val());
+      info.push($(this).find("select option:selected").val());
+      players.push(info);
+    });
+    $.ajax({
+      type: "POST",
+      url: "/tournaments/<%= @tournament.id %>/start",
+      data: { "players" : players, "tournament_id" : "<%= @tournament.id %>" },
+      success: function(data){
+        if(data.response == "success"){
+          window.location.href = "/tournaments/<%= @tournament.id %>/play"
+        }
+      },
+      error: function(e){
+
+      }
+    });
+  }
+</script>

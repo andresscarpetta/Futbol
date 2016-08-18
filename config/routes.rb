@@ -4,8 +4,14 @@ Rails.application.routes.draw do
   get '/tournaments/create' => "tournaments#index"
   get '/tournaments' => "tournaments#show"
   get '/tournaments/:id/init', :controller => 'tournaments', :action => 'init'
-  post '/create_tournament', :controller => 'tournaments', :action => 'create'
   post '/tournaments/:id/start', :controller => 'tournaments', :action => 'start'
+  post '/create_tournament', :controller => 'tournaments', :action => 'create'
+  get '/tournaments/:id/play' => "tournaments#play", as: "tournament_play", as: "tournament_play"
+  post '/tournaments/:id/play/match', :controller => 'tournaments', :action => 'match_finished'
+  get '/tournaments/:id/finish' => "tournaments#finish", as: "tournament_summary"
+  get '/tournaments/:id/play/final' => 'tournaments#final', as: "tournament_final_match"
+  post '/tournaments/:id/final', :controller => 'tournaments', :action => 'final_match'
+  post '/tournaments/:id/end', :controller => 'tournaments', :action => 'destroy', as: "tournament_destroy"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -15,8 +15,23 @@
 //= require turbolinks
 //= require_tree .
 
+var countries = ["Colombia", "Alemania", "Inglaterra", "Brasil"];
+
 function add_player(){
-  $("#content").append('<div class="col-xs-12"> <label>Jugador:</label> <div class="row"> <div class="col-xs-10"> <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required> </div> <button onclick="remove_player(this);" class="btn btn-default col-xs-2">Remover</button  > </div> <br> </div>');
+  $("#content").append('<div class="col-xs-12 element"> <div class="col-xs-8"> <label>Jugador:</label> <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required> </div> <div class="col-xs-2"> <label>Equipo:</label> <select class="form-control"> </select> </div> <div class="col-xs-2"> <div onclick="remove_player(this);" style="margin-top:27px;" class="btn btn-default">Remover</div> </div> <br> </div>');
+  for (var i = 0; i < countries.length; i++) {
+    $("select").each(function(){
+      var flag = false;
+      $(this).children("option").each(function(){
+        if($(this).val() == countries[i]){
+          flag = true;
+        }
+      });
+      if(!flag){
+        $(this).append("<option value='"+countries[i]+"'>"+countries[i]+"</option>");
+      }
+    });
+  }
 }
 
 function remove_player(obj){
