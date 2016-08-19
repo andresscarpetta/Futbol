@@ -1,0 +1,23 @@
+<h1 class="text-center"><%= @tournament.name %></h1>
+<h2 class="text-center">Final</h2>
+<div class="container">
+  <%= form_tag("/tournaments/" + @tournament.id.to_s + "/final", method: "post") do %>
+    <div class="row text-center">
+      <div class="col-xs-5">
+        <h4><%=Player.find(@players_info[0].player_id).username%> (<%=@players_info[0].team%>)</h4>
+        <%= hidden_field_tag(:first_finalist_name, Player.find(@players_info[0].player_id).username) %>
+        <%= number_field_tag(:first_finalist_score, nil, {min: 0, required: "true", class: "text-center"}) %>
+      </div>
+      <div class="col-xs-2">
+        <b>VS</b>
+      </div>
+      <div class="col-xs-5">
+        <h4><%=Player.find(@players_info[1].player_id).username%> (<%=@players_info[1].team%>)</h4>
+        <%= hidden_field_tag(:second_finalist_name, Player.find(@players_info[1].player_id).username) %>
+        <%= number_field_tag(:second_finalist_score, nil, {min: 0, required: "true", class: "text-center"}) %>
+      </div>
+    </div>
+    <br>
+    <%= submit_tag("Enviar Marcador", class: "btn btn-primary center-block") %>
+  <% end %>
+</div>
