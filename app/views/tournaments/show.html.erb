@@ -4,7 +4,7 @@
   <div class="list-group">
     <% @tournaments.each do |tournament| %>
       <% if tournament.status == "Created" %>
-        <%= link_to(tournament.name, '/tournaments/' + tournament.id.to_s + '/init', {class: 'list-group-item'}) %>
+        <%= link_to(tournament.name, tournament_join_path(tournament.id), {class: 'list-group-item'}) %>
       <% end %>
     <%end %>
   </div>
