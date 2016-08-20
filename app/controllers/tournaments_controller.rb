@@ -55,7 +55,7 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
     @matches = []
     Match.all.each do |match|
-      if match.status == "Not Played"
+      if match.status == "Not Played" && match.tournament == @tournament
         matrix = [ [ match.first_player.username, PlayerInfo.find_by(player_id: match.first_player.id).team ], [ match.second_player.username, PlayerInfo.find_by(player_id: match.second_player.id).team ] ]
         @matches.push(matrix)
       end
