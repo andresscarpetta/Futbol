@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/tournaments/:id/init', :controller => 'tournaments', :action => 'init'
   post '/tournaments/:id/start', :controller => 'tournaments', :action => 'start'
   post '/create_tournament', :controller => 'tournaments', :action => 'create'
-  get '/tournaments/:id/play' => "tournaments#play", as: "tournament_play", as: "tournament_play"
+  get '/tournaments/:id/play' => "tournaments#play", as: "tournament_play"
   post '/tournaments/:id/play/match', :controller => 'tournaments', :action => 'match_finished'
   get '/tournaments/:id/finish' => "tournaments#finish", as: "tournament_summary"
   get '/tournaments/:id/play/final' => 'tournaments#final', as: "tournament_final_match"

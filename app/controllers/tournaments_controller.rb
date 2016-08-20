@@ -16,13 +16,6 @@ class TournamentsController < ApplicationController
       player.player_infos.build(team: p[1][1], currentPoints: 0, tournament_id: params[:tournament_id])
       player.save
     end
-    respond_to do |format|
-      format.json do
-        render json: {
-          response: "success"
-        }.to_json
-      end
-    end
     tournament = Tournament.find(params[:id])
     for i in 0..tournament.players.size
       for j in i+1..tournament.players.size-1
@@ -34,13 +27,20 @@ class TournamentsController < ApplicationController
         m.save
       end
     end
+    respond_to do |format|
+      format.json do
+        render json: {
+          response: "success"
+        }.to_json
+      end
+    end
   end
 
   def play
     @tournament = Tournament.find(params[:id])
     @matches = []
     Match.all.each do |match|
-      if match.status == "Not Played"
+      if match.status == "Not Played" && match.tournament == @tournament
         matrix = [ [ match.first_player.username, PlayerInfo.find_by(player_id: match.first_player.id).team ], [ match.second_player.username, PlayerInfo.find_by(player_id: match.second_player.id).team ] ]
         @matches.push(matrix)
       end
