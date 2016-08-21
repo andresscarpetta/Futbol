@@ -1,0 +1,16 @@
+<h1 class="text-center"><%= @tournament.name %></h1>
+<div class="container">
+  <h3 class="text-center">Selecciona tu equipo</h3>
+  <%= form_tag(tournament_join_player_path(@tournament.id), method: "post") do %>
+
+  <% end %>
+</div>
+<script>
+(function(){
+  var options = "";
+  for (var i = 0; i < countries.length; i++) {
+    options+="<option value='"+countries[i]+"'>"+countries[i]+"</option>";
+  }
+  $("form").append('<%= select_tag "team", '+options+'.html_safe %>');
+})();
+</script>
