@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   post '/tournaments/:id/final', :controller => 'tournaments', :action => 'final_match'
   post '/tournaments/:id/end', :controller => 'tournaments', :action => 'destroy', as: "tournament_destroy"
   get '/tournaments/:id/join' => "tournaments#join", as: "tournament_join"
+  get '/tournaments/:id/owner_join' => "tournaments#owner_join", as: "tournament_owner_join"
+  post '/tournaments/:id/join_owner', :controller => "tournaments", :action => "join_owner", as: "tournament_join_owner"
   post '/tournaments/:id/join', :controller => 'tournaments', :action => 'join_player', as: "tournament_join_player"
+  get '/tournaments/:id/joined' => "tournaments#joined", as: "tournament_joined"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

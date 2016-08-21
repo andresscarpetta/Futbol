@@ -26,7 +26,7 @@
 	function join_tournament(){
 		$.ajax({
 			type: "POST",
-			url: "<%= tournament_join_player_path(@tournament.id) %>",
+			url: "<%= tournament_join_owner_path(@tournament.id) %>",
 			data: { "team" : $("select option:selected").val() },
 			success: function(data){
 				if(data.response == "success"){

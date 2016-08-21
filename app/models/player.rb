@@ -7,5 +7,5 @@ class Player < ActiveRecord::Base
 	has_many :tournaments, through: :player_infos
 	has_many :first_player, :class_name => 'Match', :foreign_key => 'first_player_id'
 	has_many :second_player, :class_name => 'Match', :foreign_key => 'second_player_id'
-  belongs_to :winner, :class_name => 'Player'
+  	belongs_to :tournament, :foreign_key => 'winner_id'
 end

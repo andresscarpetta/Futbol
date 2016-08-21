@@ -17,11 +17,6 @@ class TournamentsController < ApplicationController
     tournament = Tournament.find(params[:id])
     players = params[:players]
     if(players.size >= tournament.minPlayers)
-      #players.each do |p|
-      #  player = Player.find_by(username: p[1][0])
-      #  player.player_infos.build(team: p[1][1], currentPoints: 0, tournament_id: params[:id])
-      #  player.save
-      #end
       for i in 0..tournament.players.size
         for j in i+1..tournament.players.size-1
           m = Match.new
@@ -63,10 +58,8 @@ class TournamentsController < ApplicationController
     @tournament.status = "Started"
     @tournament.save
     @players_info = PlayerInfo.where(tournament_id: @tournament.id).order(currentPoints: :desc)
-    if( @matches.size == 1 )
+    if( @matches.size < 1 )
       redirect_to tournament_final_match_path(params[:id])
-    else
-      redirect_to tournament_init_path(params[:id]), alert: "Error"
     end
   end
 
@@ -77,9 +70,9 @@ class TournamentsController < ApplicationController
       t.minPlayers = params[:min]
       t.status = "Created"
       t.save
-      redirect_to tournament_init_path(t.id), notice: "Torneo Creado"
+      redirect_to tournament_owner_join_path(t.id), notice: "Torneo Creado"
     else
-      redirect_to '/tournaments/create', alert: "Error, Torneo ya existente"
+      redirect_to tournament_new_path, alert: "Error, Torneo ya existente"
     end
   end
 
@@ -115,6 +108,7 @@ class TournamentsController < ApplicationController
   def finish
     @tournament = Tournament.find(params[:id])
     @players_info = PlayerInfo.where(tournament_id: @tournament.id).order(currentPoints: :desc)
+    @tournament.winner_id = Player.find_by(username: params[:winner_name]).id
     @winner = params[:winner_name]
     @tournament.status = "Finished"
     @tournament.save
@@ -143,19 +137,24 @@ class TournamentsController < ApplicationController
 
   def destroy
     tournament = Tournament.find(params[:id])
-    tournament.players.each do |player|
-      if player.email == nil
-        player.delete
-      end
-    end
-    PlayerInfo.where(tournament_id: tournament.id).delete_all
-    Match.where(tournament_id: tournament.id).delete_all
     tournament.save
     redirect_to tournament_index_path, notice: "Torneo Terminado"
   end
 
   def join_player
+    current_player.player_infos.build(team: params[:team], currentPoints: 0, tournament_id: params[:id])
+    current_player.save
+    redirect_to tournament_joined_path(params[:id])
+  end
 
+  def owner_join
+    @tournament = Tournament.find(params[:id])    
+  end
+
+  def join_owner
+    current_player.player_infos.build(team: params[:team], currentPoints: 0, tournament_id: params[:id])
+    current_player.save
+    redirect_to tournament_init_path(params[:id])
   end
 
 end
