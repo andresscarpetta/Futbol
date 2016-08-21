@@ -1,0 +1,36 @@
+<h1 class="text-center">Historial del Jugador</h1>
+<div class="container">
+	<div class="col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+				<th class="text-center">#</th>
+				<th class="text-center">Torneo</th>
+				<th class="text-center">Fecha de Inicio</th>
+				<th class="text-center">Ganador</th>
+			</thead>
+			<tbody>
+				<% i=1 %>
+				<% current_player.tournaments.each do |tournament| %>
+				<tr class="text-center">
+					<td>
+						<%= i %>
+						<% i = i+1 %>
+					</td>
+
+					<td class="text-center">
+						<%= tournament.name %>
+					</td>
+
+					<td class="text-center">
+						<%= tournament.created_at %>
+					</td>
+
+					<td class="text-center">
+						<%= Player.find(tournament.winner_id) %>
+					</td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
