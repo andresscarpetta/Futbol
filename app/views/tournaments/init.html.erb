@@ -2,20 +2,19 @@
 <div class="container">
   <h2 class="col-sm-6">Jugadores:</h2>
   <div class="col-sm-6 clear-fix">
-    <a href="javascript:add_player();" class="btn btn-primary center-block pull-right">Agregar otro jugador</a>
+    <!--<a href="javascript:add_player();" class="btn btn-primary center-block pull-right">Agregar otro jugador</a>-->
   </div>
   <form class="col-xs-12" action="javascript:init_tournament();" method="post">
     <div id="content" class="row">
-      <% for i in 0..@tournament.minPlayers-1 do %>
+      <% @tournament.players.each do |player| %>
         <div class="col-xs-12 element">
-          <div class="col-xs-8">
+          <div class="col-xs-10">
             <label>Jugador:</label>
-            <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required>
+            <input type="text" value="<%= player.username %>" placeholder="Nombre del jugador" class="form-control" required disabled>
           </div>
           <div class="col-xs-2">
             <label>Equipo:</label>
-            <select class="form-control">
-            </select>
+            <input type="text" value="<%= PlayerInfo.find_by(player_id: player.id).team %>" class="form-control" required disabled>
           </div>
         </div>
       <% end %>
@@ -51,15 +50,19 @@
     });
     $.ajax({
       type: "POST",
-      url: "/tournaments/<%= @tournament.id %>/start",
-      data: { "players" : players, "tournament_id" : "<%= @tournament.id %>" },
+      url: "<%= tournament_start_path(@tournament.id) %>",
+      data: { "players" : players },
       success: function(data){
+        console.log(data);
         if(data.response == "success"){
-          window.location.href = "/tournaments/<%= @tournament.id %>/play"
+          window.location.href = "<%= tournament_play_path(@tournament.id) %>"
+        }
+        if(data.response == "error"){
+          alert(data.reason);
         }
       },
       error: function(e){
-
+        alert("Error, intentalo de nuevo mas tarde")
       }
     });
   }

@@ -1,17 +1,25 @@
 Rails.application.routes.draw do
 
-  get '/' => "tournaments#main"
-  get '/tournaments/create' => "tournaments#index"
-  get '/tournaments' => "tournaments#show"
-  get '/tournaments/:id/init', :controller => 'tournaments', :action => 'init'
-  post '/tournaments/:id/start', :controller => 'tournaments', :action => 'start'
-  post '/create_tournament', :controller => 'tournaments', :action => 'create'
-  get '/tournaments/:id/play' => "tournaments#play", as: "tournament_play", as: "tournament_play"
+  devise_for :players, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }, module: "players"
+  root to: "home#index"
+  get '/tournaments' => "tournaments#main", as: "tournament_index"
+  get '/tournaments/create' => "tournaments#index", as: "tournament_create"
+  get '/tournaments/show' => "tournaments#show", as: "tournament_show_all"
+  get '/tournaments/:id/init', :controller => 'tournaments', :action => 'init', as: "tournament_init"
+  post '/tournaments/:id/start', :controller => 'tournaments', :action => 'start', as: "tournament_start"
+  post '/tournaments/new', :controller => 'tournaments', :action => 'create', as: "tournament_new"
+  get '/tournaments/:id/play' => "tournaments#play", as: "tournament_play"
   post '/tournaments/:id/play/match', :controller => 'tournaments', :action => 'match_finished'
   get '/tournaments/:id/finish' => "tournaments#finish", as: "tournament_summary"
   get '/tournaments/:id/play/final' => 'tournaments#final', as: "tournament_final_match"
   post '/tournaments/:id/final', :controller => 'tournaments', :action => 'final_match'
   post '/tournaments/:id/end', :controller => 'tournaments', :action => 'destroy', as: "tournament_destroy"
+  get '/tournaments/:id/join' => "tournaments#join", as: "tournament_join"
+  get '/tournaments/:id/owner_join' => "tournaments#owner_join", as: "tournament_owner_join"
+  post '/tournaments/:id/join_owner', :controller => "tournaments", :action => "join_owner", as: "tournament_join_owner"
+  post '/tournaments/:id/join', :controller => 'tournaments', :action => 'join_player', as: "tournament_join_player"
+  get '/tournaments/:id/joined' => "tournaments#joined", as: "tournament_joined"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

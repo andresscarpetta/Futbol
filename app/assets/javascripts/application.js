@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require_tree .
 
-var countries = ["Colombia", "Alemania", "Inglaterra", "Brasil"];
+var countries = ["Colombia", "Alemania", "Inglaterra", "Brasil", "Francia", "España", "Japon", "Canada", "Noruega", "Italia", "Holanda"];
 
 function add_player(){
   $("#content").append('<div class="col-xs-12 element"> <div class="col-xs-8"> <label>Jugador:</label> <input type="text" value="" placeholder="Nombre del jugador" class="form-control" required> </div> <div class="col-xs-2"> <label>Equipo:</label> <select class="form-control"> </select> </div> <div class="col-xs-2"> <div onclick="remove_player(this);" style="margin-top:27px;" class="btn btn-default">Remover</div> </div> <br> </div>');

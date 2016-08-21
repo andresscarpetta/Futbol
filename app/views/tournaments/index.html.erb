@@ -1,6 +1,6 @@
 <h1 class="center-block text-center">Crear Torneo</h1>
 <div class="container">
-	<%= form_tag("/create_tournament", method: "post") do %>
+	<%= form_tag(tournament_new_path, method: "post") do %>
 	  <%= label_tag(:name, "Nombre") %>
 	  <%= text_field_tag(:name, nil, {class: "form-control", placeholder: "Nombre del torneo", required: "true"}) %>
 		<%= label_tag(:min, "Minimo de jugadores:") %>

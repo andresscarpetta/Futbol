@@ -1,0 +1,41 @@
+<h1 class="text-center"><%= @tournament.name %></h1>
+<div class="container">
+	<h3 class="text-center">Selecciona tu equipo</h3>
+	<select class="form-control">
+	</select>
+	<br>
+	<button class="btn btn-primary center-block" onclick="join_tournament();">Ingresar al torneo</button>
+</div>
+<script>
+	(function(){
+		for (var i = 0; i < countries.length; i++) {
+			$("select").each(function(){
+				var flag = false;
+				$(this).children("option").each(function(){
+					if($(this).val() == countries[i]){
+						flag = true;
+					}
+				});
+				if(!flag){
+					$(this).append("<option value='"+countries[i]+"'>"+countries[i]+"</option>");
+				}
+			});
+		}
+	})();
+
+	function join_tournament(){
+		$.ajax({
+			type: "POST",
+			url: "<%= tournament_join_player_path(@tournament.id) %>",
+			data: { "team" : $("select option:selected").val() },
+			success: function(data){
+				if(data.response == "success"){
+					window.location.href= "<%= tournament_joined_path %>";
+				}
+			},
+			error: function(e){
+				alert("Error, intentelo de nuevo mas tarde");
+			}
+		});
+	}
+</script>
