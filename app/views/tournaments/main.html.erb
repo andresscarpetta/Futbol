@@ -19,6 +19,7 @@
             Perfil
           <% end %>
         </li>-->
+        <li><%= link_to "Historial", player_history_path(current_player.id) %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Cerrar Sesión", destroy_player_session_path, method: "DELETE" %></li>

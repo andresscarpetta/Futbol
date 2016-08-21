@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post '/tournaments/:id/end', :controller => 'tournaments', :action => 'destroy', as: "tournament_destroy"
   get '/tournaments/:id/join' => "tournaments#join", as: "tournament_join"
   post '/tournaments/:id/join', :controller => 'tournaments', :action => 'join_player', as: "tournament_join_player"
+  get '/players/:id/history' => 'players#history', as: "player_history"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
