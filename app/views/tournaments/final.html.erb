@@ -4,6 +4,7 @@
   <%= form_tag("/tournaments/" + @tournament.id.to_s + "/final", method: "post") do %>
     <div class="row text-center">
       <div class="col-xs-5">
+        <%= image_tag Player.find(@players_info[0].player_id).avatar.url(:thumb), class: "center-block" %>
         <h4><%=Player.find(@players_info[0].player_id).username%> (<%=@players_info[0].team%>)</h4>
         <%= hidden_field_tag(:first_finalist_name, Player.find(@players_info[0].player_id).username) %>
         <%= number_field_tag(:first_finalist_score, nil, {min: 0, required: "true", class: "text-center"}) %>
@@ -12,6 +13,7 @@
         <b>VS</b>
       </div>
       <div class="col-xs-5">
+        <%= image_tag Player.find(@players_info[1].player_id).avatar.url(:thumb), class: "center-block" %>
         <h4><%=Player.find(@players_info[1].player_id).username%> (<%=@players_info[1].team%>)</h4>
         <%= hidden_field_tag(:second_finalist_name, Player.find(@players_info[1].player_id).username) %>
         <%= number_field_tag(:second_finalist_score, nil, {min: 0, required: "true", class: "text-center"}) %>
