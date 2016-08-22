@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'open_uri_redirections'
+
 class Player < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -15,8 +18,8 @@ class Player < ActiveRecord::Base
 		where(provider: auth.provider, uid: auth.uid).first_or_create do |player|
 		    player.email = auth.info.email
 		    player.password = Devise.friendly_token[0,20]
-		    player.username = auth.info.name   # assuming the user model has a name
-		    player.avatar = auth.info.image # assuming the user model has an image
+		    player.username = auth.info.name
+   			player.avatar = open(auth.info.image, :allow_redirections => :safe)
 		end
 	end
 
@@ -26,5 +29,5 @@ class Player < ActiveRecord::Base
 		        player.email = data["email"] if player.email.blank?
 		    end
 	    end
-	  end
+	end
 end
