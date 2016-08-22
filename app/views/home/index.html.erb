@@ -3,6 +3,10 @@
   <div class="col-xs-6 col-xs-offset-3">
     <h3 class="text-center">Empieza a jugar</h3>
     <%= link_to("Inicia Sesión", new_player_session_path(), class: "btn btn-primary center-block") %>
+    <br>
+    <%= link_to "Inicia Sesión con Facebook", player_facebook_omniauth_authorize_path, class: "btn btn-primary center-block" %>
+    <!--<br>
+    <%= link_to "Inicia Sesión con Twitter", player_twitter_omniauth_authorize_path, class: "btn btn-primary center-block" %>-->
     <h4 class="text-center">ó</h4>
     <%= link_to("Registrate", new_player_registration_path(), class: "btn btn-primary center-block") %>
   </div>

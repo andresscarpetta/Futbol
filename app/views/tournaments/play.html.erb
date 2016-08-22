@@ -5,6 +5,7 @@
     <%= form_tag("/tournaments/" + @tournament.id.to_s + "/play/match", method: "post") do %>
       <div class="row text-center">
         <div class="col-xs-5">
+          <%= image_tag Player.find_by(username: @matches[0][0][0]).avatar.url(:thumb), class: "center-block" %>
           <h4><%=@matches[0][0][0]%> (<%=@matches[0][0][1]%>)</h4>
           <%= hidden_field_tag(:first_player_name, @matches[0][0][0]) %>
           <%= number_field_tag(:first_player, nil, {min: 0, required: "true", class: "text-center"}) %>
@@ -13,6 +14,7 @@
           <b>VS</b>
         </div>
         <div class="col-xs-5">
+          <%= image_tag Player.find_by(username: @matches[0][1][0]).avatar.url(:thumb), class: "center-block" %>
           <h4><%=@matches[0][1][0]%> (<%=@matches[0][1][1]%>)</h4>
           <%= hidden_field_tag(:second_player_name, @matches[0][1][0]) %>
           <%= number_field_tag(:second_player, nil, {min: 0, required: "true", class: "text-center"}) %>
