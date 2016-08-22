@@ -52,3 +52,5 @@ gem 'omniauth-facebook'
 gem "paperclip", "~> 5.0.0"
 
 gem 'open_uri_redirections'
+
+gem 'omniauth-twitter'

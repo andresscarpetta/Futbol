@@ -5,7 +5,7 @@ class Player < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
  	devise :database_authenticatable, :registerable,
-    	   :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
+    	   :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook,:twitter]
 	has_many :player_infos
 	has_many :tournaments, through: :player_infos
 	has_many :first_player, :class_name => 'Match', :foreign_key => 'first_player_id'
@@ -26,6 +26,9 @@ class Player < ActiveRecord::Base
 	def self.new_with_session(params, session)
 	    super.tap do |player|
 		    if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+		        player.email = data["email"] if player.email.blank?
+		    end
+		    if data = session["devise.twitter_data"] && session["devise.twitter_data"]["extra"]["raw_info"]
 		        player.email = data["email"] if player.email.blank?
 		    end
 	    end
